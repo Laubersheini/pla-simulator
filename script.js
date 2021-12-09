@@ -15,6 +15,21 @@ function generateDom(collumCount,rowCount ) {
         for (let i = 0; i < collumCount; i++) {
             let newElement = document.createElement("div")
             newElement.classList.add("module")
+
+            let textElement = document.createElement("div")
+            textElement.classList.add("textElement")
+            newElement.appendChild(textElement)
+
+            let horizontalOutput = document.createElement("hr")
+            horizontalOutput.classList.add("horizontalOutput")
+            newElement.appendChild(horizontalOutput)
+
+            let verticalOutput = document.createElement("hr")
+            verticalOutput.classList.add("verticalOutput")
+            newElement.appendChild(verticalOutput)
+
+
+            
             row.appendChild(newElement)
             domNodes[i][j] = newElement
         }
@@ -84,8 +99,21 @@ for (let i = 1; i < collumCount+2; i++) {
 
 }
 
-//top right corner should not have any modules
-modules[0][0] = null
 
 
+//update once to set initial state
+for (let i=1;i<collumCount+1;i++){
+    modules[i][0].bottom.updateTop(true)
+    domNodes[i][0].childNodes[1].classList.add("outputHidden")
+}
+//update once to set initial state
+for (let i=1;i<collumCount+1;i++){
+    modules[0][i].right.updateLeft(true)
+    domNodes[0][i].childNodes[2].classList.add("outputHidden")
+}
 
+//remove everything from the corners
+domNodes[0][0].innerHTML = ""
+domNodes[0][collumCount+1].innerHTML = ""
+domNodes[rowCount+1][0].innerHTML = ""
+domNodes[rowCount+1][collumCount+1].innerHTML = ""
