@@ -1,51 +1,42 @@
-class Module{
-    constructor(){
+var rowCount = 5
+var collumCount = 5
 
-    }
+var modules = []
 
-
-    updateTop() {
-       console.error("this method need to get overwritten")
-    }
-
-    updateLeft() {
-       console.error("this method need to get overwritten")
+for(let i=0;i<collumCount+1;i++){
+    modules[i]= []
+    for(let j=1;j<rowCount+1;j++){
+        modules[i][j] = new Node()
     }
 }
 
+for(let i =0;i<rowCount;i++){
+    modules[0][i] = new Input()
+}
 
-
-class Input extends Module{
-
-    constructor(){
-        super()
-    }
+for(let i =0;i<collumCount;i++){
+    modules[i][0] = new Constant(true)
 }
 
 
-class Constant extends Module{
+//crosslink modules
 
-    constructor(){
-        super()
-    }
-}
-
-
-class Output extends Module{
+for(let i=0;i<collumCount-1;i++){
     
-    constructor(){
-        super()
-    }
-
-    updateLeft(newValue) {
-        //update the html to whatever value is given
+    for(let j=1;j<rowCount;j++){
+        modules[i][j].right = modules[i+1][j]
     }
 
 }
 
+for(let i=0;i<collumCount;i++){
+    
+    for(let j=0;j<rowCount-1;j++){
+        modules[i][j].bottom = modules[i][j+1]
 
-class Node extends Module{
-    constructor(){
-        super()
     }
+
 }
+
+//top right corner should not have any modules
+modules[0][0] = null
