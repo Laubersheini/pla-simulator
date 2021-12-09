@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,11 +10,19 @@
     <script src="./module.js" defer></script>
     <script src="./script.js" defer></script>
 </head>
+
 <body>
-    
 
-<div id="PLA"></div>
+    <header id="header">
+        <label>Collums</label>
+        <input id="collumCount" type="number" min="1" max="50" />
+        <label>Rows</label>
+        <input id="rowCount" type="number" min="1" max="50" />
+        <button onclick="changeSize()">Change Size!</button>
+    </header>
+    <div id="PLA"></div>
 
-    
+
 </body>
+
 </html>

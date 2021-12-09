@@ -91,7 +91,6 @@ class Output extends Module {
     constructor(domNode) {
         super(domNode)
         this.domNode.innerText = true
-        console.log(this.domNode);
         this.domNode.parentNode.childNodes[1].classList.add("outputHidden")
         this.domNode.parentNode.childNodes[2].classList.add("outputHidden")
     }
