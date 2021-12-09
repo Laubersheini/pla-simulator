@@ -24,11 +24,11 @@ function generateDom(collumCount,rowCount ) {
     return domNodes
 }
 
-var domNodes = generateDom(collumCount+1,rowCount+1)
+var domNodes = generateDom(collumCount+2,rowCount+1)
 
 var modules = []
 
-for (let i = 0; i < collumCount + 1; i++) {
+for (let i = 0; i < collumCount + 2; i++) {
     modules[i] = []
     for (let j = 1; j < rowCount + 1; j++) {
         modules[i][j] = new Node(domNodes[i][j])
@@ -36,14 +36,17 @@ for (let i = 0; i < collumCount + 1; i++) {
     }
 }
 
-for (let i = 0; i < rowCount; i++) {
-    modules[0][i] = new Input(domNodes[0][i])
+for (let i = 1; i < rowCount+1; i++) {
+    modules[0][i] = new Input(domNodes[0][i],true)
 }
 
-for (let i = 0; i < collumCount; i++) {
-    modules[i][0] = new Constant(domNodes[i][0],true)
+for (let i = 1; i < collumCount+1; i++) {
+    modules[i][0] = new Input(domNodes[i][0],true)
 }
 
+for (let i = 1; i < rowCount+1; i++) {
+    modules[rowCount+1][i] = new Output(domNodes[rowCount+1][i],true)
+}
 
 //crosslink modules
 for (let i = 0; i < collumCount - 1; i++) {
