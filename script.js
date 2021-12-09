@@ -48,7 +48,7 @@ for (let i = 1; i < collumCount+1; i++) {
 }
 
 //right outputs
-modules[rowCount+1] = []
+modules[collumCount+1] = []
 for (let i = 1; i < rowCount+1; i++) {
     modules[collumCount+1][i] = new Output(domNodes[collumCount+1][i],true)
 }
@@ -76,9 +76,7 @@ for (let i = 0; i < collumCount + 1; i++) {
 //top to bottom
 for (let i = 1; i < collumCount+2; i++) {
     for (let j = 0; j < rowCount +1; j++) {
-        
-        if((i!=0 || j!=0)&&(i!=rowCount+1||j!=rowCount+1)){
-            console.log(i,j);
+        if((i!=collumCount+1||(j!=rowCount+1))&&(i!=collumCount+1||j!=0)){
             modules[i][j].bottom = modules[i][j + 1]
         }
 

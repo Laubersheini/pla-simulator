@@ -82,8 +82,8 @@ class Node extends Module {
         super(domNode)
         this.type = 0
         this.domNode.innerText = this.type
-        console.log(this.domNode);
-        console.log(this.type);
+        //console.log(this.domNode);
+        //console.log(this.type);
 
     }
 
@@ -135,7 +135,7 @@ class Node extends Module {
                 this.bottom.updateTop(newValue)
                 break;
             case 1:
-                this.right.updateLeft(newValue || this.topInput)
+                this.right.updateLeft(this.leftInput || this.topInput)
                 this.bottom.updateTop(newValue)
                 break;
             case 2:
