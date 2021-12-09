@@ -90,7 +90,7 @@ class Output extends Module {
 
     constructor(domNode) {
         super(domNode)
-        this.domNode.innerText = "output"
+        this.domNode.innerText = true
         console.log(this.domNode);
         this.domNode.parentNode.childNodes[1].classList.add("outputHidden")
         this.domNode.parentNode.childNodes[2].classList.add("outputHidden")
@@ -132,14 +132,14 @@ class Node extends Module {
 
         this.firstChild.innerText = that.type
 
-        that.updateLeft(that.leftInput)
-        that.updateTop(that.topInput)
+        that.updateLeft(that.leftInput,true)
+        that.updateTop(that.topInput,true)
 
 
     }
 
-    updateLeft(newValue) {
-        if (this.leftInput != newValue) {
+    updateLeft(newValue,isTypechange) {
+        if (this.leftInput != newValue || isTypechange) {
             console.log("updated");
             this.leftInput = newValue
             switch (this.type) {
@@ -170,8 +170,8 @@ class Node extends Module {
         }
     }
 
-    updateTop(newValue) {
-        if (this.topInput != newValue) {
+    updateTop(newValue,isTypechange) {
+        if (this.topInput != newValue||isTypechange) {
 
             this.topInput = newValue
             switch (this.type) {
