@@ -1,7 +1,9 @@
 class Module{
-    constructor(){
+    constructor(domNode){
         this.right = null
         this.bottom = null
+        this.domNode = domNode
+        this.domNode.onclick = this.onclick
     }
 
 
@@ -12,23 +14,26 @@ class Module{
     updateLeft() {
        console.error("this method need to get overwritten")
     }
+
+    onclick(){ //gets assinged to every moudule and says how they behave to beeing clicked on
+
+    }
 }
 
 
 
 class Input extends Module{
 
-    constructor(){
-        super()
-        this.type = "input"
+    constructor(domNode){
+        super(domNode)
     }
 }
 
 
 class Constant extends Module{
 
-    constructor(value){
-        super()
+    constructor(domNode,value){
+        super(domNode)
         this.value = value
     }
 }
@@ -36,8 +41,8 @@ class Constant extends Module{
 
 class Output extends Module{
     
-    constructor(){
-        super()
+    constructor(domNode){
+        super(domNode)
     }
 
     /**Updates the left input of the Output*/
@@ -49,8 +54,8 @@ class Output extends Module{
 
 
 class Node extends Module{
-    constructor(){
-        super()
+    constructor(domNode){
+        super(domNode)
     }
 }
 
