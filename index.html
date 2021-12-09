@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PLA-simulator</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./modal.css">
+    <script src="./modal.js" defer></script>
     <script src="./module.js" defer></script>
     <script src="./script.js" defer></script>
 </head>
@@ -14,18 +16,77 @@
 <body>
 
     <header id="header">
-        <label>Collums</label>
-        <input id="collumCount" type="number" min="1" max="50" />
-        <label>Rows</label>
-        <input id="rowCount" type="number" min="1" max="50" />
-        <button onclick="changeSize()">Change Size!</button>
+        <button id="usageButton" onclick="openModal(1)">Usage</button>
+        <div id="sizeSelection">
+            <label>Collums</label>
+            <input id="collumCount" type="number" min="1" max="50" />
+            <label>Rows</label>
+            <input id="rowCount" type="number" min="1" max="50" />
+            <button onclick="changeSize()">Change Size!</button>
+        </div>
+        <button onclick="openModal(0)" id="aboutButton">About</button>
     </header>
     <div id="PLA-container">
 
-    <div id="PLA"></div>
+        <div id="PLA"></div>
+    </div>
+
+    <div id="modal1" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal(0)">&times;</span>
+            <p>
+                <a href="https://laubersheini.github.io">David Laubersheimer 2021</a>
+            </p>
+            <p>
+                A programm used for simulating Programmable Logic Arrays(PLA)
+            </p>
+            <p>
+                This programm is licenced under the Gnu AGPL. The sourcecode is available at <a
+                    href="https://github.com/laubersheini/PLA">https://github.com/laubersheini/PLA</a>
+            </p>
+            <p>
+                Feel free to report bugs on GitHub.
+            </p>
+        </div>
     </div>
 
 
+    <div id="modal2" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal(0)">&times;</span>
+            <p>The top row and the left collum are Inputs. Click on them to change their value between one and zero</p>
+            <p>The bottom row and the righmost collum are outputs. They simply display their input.</p>
+            <p>
+                The other nodes have two inputs on the top(x) and left(y) and to outputs on the right and the bottom<br/>
+                Clicking on them switches between four modes.
+            </p>
+            <p>
+                Mode zero simply passes the top input to the bottom output and the left input to the right output
+                <!--
+
+                <div class="module moduleTutorial">
+                    <div class="textElement">0</div>
+                    <div class="horizontalOutput horizontalOutputOn"></div>
+                    <div class="verticalOutput verticalOutputOn"></div>
+
+                </div>
+                -->
+            </p>
+            <p>
+                Mode one passes the top input to the bottom and computes x or y on the right output
+            </p>
+            <p>
+                Mode two passes the left input trough to the right and computes x and y on the bottom output
+            </p>
+            <p>
+                Mode two passes the left input trough to the right and computes x and not y on the bottom output
+            </p>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -1,5 +1,5 @@
 :root{
-    --output-length: 5vh;
+    --output-length: 50%;
     color:white;
     background-color:#2E2E2E;
 }
@@ -23,6 +23,12 @@
 }
 
 
+.moduleTutorial{
+    width: 5vh;
+    height: 5vh;
+
+}
+
 #PLA{
     display: flex;
     flex-direction: column;
@@ -35,7 +41,7 @@
 
     margin: 0;
 
-    z-index: 100;
+    z-index: 5;
 
     width: var(--output-length);
     height: 5%;
@@ -82,16 +88,11 @@
 }
 
 /*General Layout*/
-
-#header{
-    height: 7vh;
-    display: flex;
-    padding-top: 2vh;
-    background-color:#191919;
-    align-items: start;
-    justify-content: center;
-
+body{
+    margin: 0;
+    padding: 0;
 }
+
 #PLA-container{
     display :grid;
     align-items: center;
@@ -99,4 +100,29 @@
     width: 100%;
 
     margin-top: 2.5vh;
+}
+
+
+#header{
+    padding: 0;
+    margin: 0;
+    height: 7vh;
+    display: grid;
+    padding-top: 2vh;
+    background-color:#191919;
+    
+    /*justify-content: center;*/
+    justify-content: space-between;
+    align-items: center;
+    grid-template-columns:repeat(3,auto);
+}
+
+
+#aboutButton{
+    justify-self: end;
+    margin-right: 2vw;
+}
+
+#usageButton{
+    margin-left: 2vw;
 }
