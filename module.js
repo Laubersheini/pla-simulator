@@ -2,9 +2,13 @@ class Module {
     constructor(domNode) {
         this.right = null
         this.bottom = null
-        this.domNode = domNode
 
+        this.topInput = true
+        this.leftInput = true
+
+        this.domNode = domNode
         this.domNode.that = this //even if we call an onclick as a method of this class "this" reffers to the dom and not the class so we need to save a reference :(
+        
         this.domNode.addEventListener("click", this.onclick)
     }
 
@@ -26,15 +30,23 @@ class Module {
 
 class Input extends Module {
 
-    constructor(domNode,value) {
+    constructor(domNode, value) {
         super(domNode)
         this.value = value
         this.domNode.innerText = value
     }
 
-    onclick(){
-        this.that.value = !this.that.value
-        this.innerText = this.that.value
+    onclick() {
+        let that = this.that
+
+        that.value = !that.value
+        this.innerText = that.value
+        if(that.right != null){
+            that.right.updateLeft(that.value)
+        }
+        if(that.bottom != null){
+            that.bottom.updateRight(that.value)
+        }
     }
 }
 
@@ -50,9 +62,10 @@ class Output extends Module {
     /**Updates the left input of the Output*/
     updateLeft(newValue) {
         //update the html to whatever value is given
+        this.domNode.innerText = newValue
     }
-    
-    onc
+
+
 }
 
 
@@ -79,6 +92,55 @@ class Node extends Module {
 
 
 
+    }
+
+    updateLeft(newValue) {
+        console.log("updated");
+        this.leftInput = newValue
+        switch (this.type) {
+            case 0:
+                this.right.updateLeft(newValue)
+                break;
+            case 1:
+                this.right.updateLeft(newValue||this.topInput)
+                break;
+            case 2:
+                this.right.updateLeft(newValue)
+                this.bottom.updateTop(this.leftInput&&this.topInput)
+                break;
+            case 3:
+                this.right.updateLeft(newValue)
+                this.bottom.updateTop((!this.leftInput)&&this.topInput)
+                break;
+
+            default:
+                console.error("undefined state")
+                break;
+        }
+
+    }
+
+    updateTop(newValue) {
+        this.topInput = newValue
+        switch (this.type) {
+            case 0:
+                this.bottom.updateTop(newValue)
+                break;
+            case 1:
+                this.right.updateLeft(newValue||this.topInput)
+                this.bottom.updateTop(newValue)
+                break;
+            case 2:
+                this.bottom.updateTop(this.leftInput&&this.topInput)
+                break;
+            case 3:
+                this.bottom.updateTop((!this.leftInput)&&this.topInput)
+            break;
+
+            default:
+                console.error("undefined state")
+                break;
+        }
     }
 
 }
