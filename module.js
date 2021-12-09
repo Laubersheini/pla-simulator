@@ -139,61 +139,66 @@ class Node extends Module {
     }
 
     updateLeft(newValue) {
-        console.log("updated");
-        this.leftInput = newValue
-        switch (this.type) {
-            case 0:
-                this.rightOutput = newValue;
-                break;
-            case 1:
-                this.rightOutput = newValue || this.topInput
-                break;
-            case 2:
-                this.rightOutput = newValue
-                this.bottomOutput = this.leftInput && this.topInput
-                break;
-            case 3:
-                this.rightOutput = newValue 
-                this.bottomOutput = (!this.leftInput) && this.topInput
-                break;
+        if (this.leftInput != newValue) {
+            console.log("updated");
+            this.leftInput = newValue
+            switch (this.type) {
+                case 0:
+                    this.rightOutput = newValue;
+                    break;
+                case 1:
+                    this.rightOutput = newValue || this.topInput
+                    break;
+                case 2:
+                    this.rightOutput = newValue
+                    this.bottomOutput = this.leftInput && this.topInput
+                    break;
+                case 3:
+                    this.rightOutput = newValue
+                    this.bottomOutput = (!this.leftInput) && this.topInput
+                    break;
 
-            default:
-                console.error("undefined state")
-                break;
+                default:
+                    console.error("undefined state")
+                    break;
+            }
+
+            this.updateBottomVisuals()
+            this.updateRightVisuals()
+            this.right.updateLeft(this.rightOutput)
+            this.bottom.updateTop(this.bottomOutput)
         }
-
-        this.updateBottomVisuals()
-        this.updateRightVisuals()
-        this.right.updateLeft(this.rightOutput)
-        this.bottom.updateTop(this.bottomOutput)
     }
 
     updateTop(newValue) {
-        this.topInput = newValue
-        switch (this.type) {
-            case 0:
-                this.bottomOutput = newValue
-                break;
-            case 1:
-                this.rightOutput = this.leftInput || this.topInput
-                this.bottomOutput = this.topInput
-                break;
-                break;
-            case 2:
-                this.bottomOutput = this.leftInput && this.topInput
-                break;
-            case 3:
-                this.bottomOutput = (!this.leftInput) && this.topInput
-                break;
+        if (this.topInput != newValue) {
 
-            default:
-                console.error("undefined state")
-                break;
+            this.topInput = newValue
+            switch (this.type) {
+                case 0:
+                    this.bottomOutput = newValue
+                    break;
+                case 1:
+                    this.rightOutput = this.leftInput || this.topInput
+                    this.bottomOutput = this.topInput
+                    break;
+                    break;
+                case 2:
+                    this.bottomOutput = this.leftInput && this.topInput
+                    break;
+                case 3:
+                    this.bottomOutput = (!this.leftInput) && this.topInput
+                    break;
+
+                default:
+                    console.error("undefined state")
+                    break;
+            }
+            this.updateBottomVisuals()
+            this.updateRightVisuals()
+            this.right.updateLeft(this.rightOutput)
+            this.bottom.updateTop(this.bottomOutput)
         }
-        this.updateBottomVisuals()
-        this.updateRightVisuals()
-        this.right.updateLeft(this.rightOutput)
-        this.bottom.updateTop(this.bottomOutput)
     }
 
 }
