@@ -24,7 +24,7 @@ function generateDom(collumCount,rowCount ) {
     return domNodes
 }
 
-var domNodes = generateDom(collumCount+2,rowCount+1)
+var domNodes = generateDom(collumCount+2,rowCount+2)
 
 var modules = []
 
@@ -36,21 +36,35 @@ for (let i = 1; i < collumCount + 1; i++) {
     }
 }
 
+//left inputs
 modules[0] = []
 for (let i = 1; i < rowCount+1; i++) {
     modules[0][i] = new Input(domNodes[0][i],true)
 }
 
+//top inputs
 for (let i = 1; i < collumCount+1; i++) {
     modules[i][0] = new Input(domNodes[i][0],true)
 }
 
+//right outputs
 modules[rowCount+1] = []
 for (let i = 1; i < rowCount+1; i++) {
-    modules[rowCount+1][i] = new Output(domNodes[rowCount+1][i],true)
+    modules[collumCount+1][i] = new Output(domNodes[collumCount+1][i],true)
 }
 
+//bottom outputs
+for (let i = 1; i < collumCount+1; i++) {
+    modules[i][rowCount+1] = new Output(domNodes[i][rowCount+1],true)
+}
+
+
+
+
+
 //crosslink modules
+
+//left to right
 for (let i = 0; i < collumCount + 1; i++) {
 
     for (let j = 1; j < rowCount +1 ; j++) {
@@ -59,11 +73,12 @@ for (let i = 0; i < collumCount + 1; i++) {
 
 }
 
-for (let i = 0; i < collumCount+2; i++) {
-
+//top to bottom
+for (let i = 1; i < collumCount+2; i++) {
     for (let j = 0; j < rowCount +1; j++) {
-        console.log(i,j);
-        if(i!=0 && j!=0){
+        
+        if((i!=0 || j!=0)&&(i!=rowCount+1||j!=rowCount+1)){
+            console.log(i,j);
             modules[i][j].bottom = modules[i][j + 1]
         }
 
