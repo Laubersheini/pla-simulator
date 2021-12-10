@@ -42,7 +42,7 @@ function generateDom(collumCount, rowCount) {
     return domNodes
 }
 
-function generatePLA(collumCount, rowCount) {
+function generatePLA(collumCount, rowCount, moduleTypes) {
 
 
 
@@ -107,15 +107,31 @@ function generatePLA(collumCount, rowCount) {
     }
 
 
+    //set the types of the modules (if a type is given)
+
+    if (moduleTypes != undefined) {
+        for (let i = 0; i < moduleTypes.length; i++) {
+            for (let j = 0; j < moduleTypes[i].length; j++) {
+                if (modules[i][j] != null) {
+
+                    modules[i][j].type = moduleTypes[i][j]
+                }
+
+            }
+        }
+    }
+
 
     //update once to set initial state
     for (let i = 1; i < collumCount + 1; i++) {
-        modules[i][0].bottom.updateTop(true)
+        modules[i][0].bottom.updateTop(modules[i][0].type)
+        modules[i][0].updateBottomVisuals()
         domNodes[i][0].childNodes[1].classList.add("outputHidden")
     }
     //update once to set initial state
     for (let i = 1; i < rowCount + 1; i++) {
-        modules[0][i].right.updateLeft(true)
+        modules[0][i].right.updateLeft(modules[0][i].type)
+        modules[0][i].updateRightVisuals()
         domNodes[0][i].childNodes[2].classList.add("outputHidden")
     }
 
@@ -126,12 +142,42 @@ function generatePLA(collumCount, rowCount) {
     domNodes[collumCount + 1][rowCount + 1].innerHTML = ""
 }
 
+function modulesToString(modules) {
+    let moduleTypes = []
+
+    for (let i = 0; i < modules.length; i++) {
+        moduleTypes[i] = []
+        for (let j = 0; j < modules[i].length; j++) {
+            const element = modules[i][j];
+            if (element != undefined) {
+
+                moduleTypes[i][j] = element.type
+            }
+
+        }
+    }
+    return JSON.stringify(moduleTypes)
+}
+
+function saveModules() {
+    let moduleTypes = modulesToString(modules)
+    localStorage.setItem("PLA-moduleTypes",moduleTypes) 
+}
+
 
 
 function changeSize() {
     let collumCount = parseInt(document.getElementById("collumCount").value)
     let rowCount = parseInt(document.getElementById("rowCount").value)
-    generatePLA(collumCount,rowCount)
+    generatePLA(collumCount, rowCount)
 }
 
-generatePLA(5, 5)
+//read modules from localstore if they exist
+var moduleTypes = localStorage.getItem("PLA-moduleTypes")
+if (moduleTypes == undefined) {
+
+    generatePLA(5, 5)
+} else {
+    moduleTypes = JSON.parse(moduleTypes)
+    generatePLA(moduleTypes.length - 2, moduleTypes[1].length - 2, moduleTypes)
+}

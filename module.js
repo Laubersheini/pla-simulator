@@ -50,18 +50,29 @@ class Module {
     onclick() { //gets assinged to every moudule and says how they behave to beeing clicked on
         console.warn("not overwritten")
     }
+
+
+    set type(type){
+        this._type = type
+        this.domNode.innerText = type
+    } 
+    get type(){
+        return this._type
+    }
+
+
 }
 
 
 
 class Input extends Module {
 
-    constructor(domNode, value) {
+    constructor(domNode, type) {
         super(domNode)
-        this.value = value
-        this.domNode.innerText = value
-        this.bottomOutput = value
-        this.rightOutput = value
+        this.type = type
+        this.domNode.innerText = type
+        this.bottomOutput = type
+        this.rightOutput = type
         this.updateBottomVisuals()
         this.updateRightVisuals()
     }
@@ -69,18 +80,29 @@ class Input extends Module {
     onclick() {
         let that = this.that
 
-        that.value = !that.value
-        this.firstChild.innerText = that.value
+        that.type = !that.type
+        this.firstChild.innerText = that.type
         if (that.right != null) {
-            that.rightOutput = that.value
             that.updateRightVisuals()
-            that.right.updateLeft(that.value)
+            that.right.updateLeft(that.type)
         }
         if (that.bottom != null) {
-            that.bottomOutput = that.value
             that.updateBottomVisuals()
-            that.bottom.updateTop(that.value)
+            that.bottom.updateTop(that.type)
         }
+
+        saveModules()
+    }
+
+    set type(type){
+        this._type = type
+        this.domNode.innerText = type
+        this.bottomOutput = type
+        this.rightOutput = type
+    }
+
+    get type(){
+        return this._type
     }
 }
 
@@ -90,9 +112,10 @@ class Output extends Module {
 
     constructor(domNode) {
         super(domNode)
-        this.domNode.innerText = true
+        //this.domNode.innerText = true
         this.domNode.parentNode.childNodes[1].classList.add("outputHidden")
         this.domNode.parentNode.childNodes[2].classList.add("outputHidden")
+        this.type = true;
     }
 
     /**Updates the left input of the Output*/
@@ -114,7 +137,7 @@ class Node extends Module {
     constructor(domNode) {
         super(domNode)
         this.type = 0
-        this.domNode.innerText = this.type
+        //this.domNode.innerText = this.type
         //console.log(this.domNode);
         //console.log(this.type);
 
@@ -135,6 +158,7 @@ class Node extends Module {
         that.updateTop(that.topInput,true)
 
 
+        saveModules()
     }
 
     updateLeft(newValue,isTypechange) {
@@ -199,6 +223,5 @@ class Node extends Module {
             this.bottom.updateTop(this.bottomOutput)
         }
     }
-
 }
 
